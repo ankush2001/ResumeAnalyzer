@@ -3,7 +3,6 @@ package com.resumeai.resumeanalyzer.controller;
 import com.resumeai.resumeanalyzer.model.ResumeData;
 import com.resumeai.resumeanalyzer.repository.ResumeRepository;
 import com.resumeai.resumeanalyzer.service.ResumeService;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -15,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
@@ -35,9 +33,10 @@ public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
                                      @RequestParam("name") String name,
                                      @RequestParam("email") String email,
                                      @RequestParam("phone") String phone,
-                                     @RequestParam("positionTitle") String positionTitle) {
+                                     @RequestParam("positionTitle") String positionTitle,
+                                     @RequestParam(value = "jobDescription", required = true) String jobDescription) {
     try {
-        String response = resumeService.parseAndSaveResume(file, name, email, phone, positionTitle);
+        String response = resumeService.parseAndSaveResume(file, name, email, phone, positionTitle, jobDescription);
         return ResponseEntity.ok(response);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -48,8 +47,6 @@ public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
 
     @GetMapping("/view-resume/{id}")
 public ResponseEntity<?> viewResume(@PathVariable Long id) throws Exception {
-//    ResumeData resume = resumeRepository.findById(id)
-//            .orElseThrow(() -> new RuntimeException("Resume not found with id: " + id));
     Optional<ResumeData> optionalResume = resumeRepository.findById(id);
 
     if (optionalResume.isEmpty()) {
@@ -86,10 +83,5 @@ public ResponseEntity<?> viewResume(@PathVariable Long id) throws Exception {
    }
 }
 
-    @GetMapping("/all/data")
-    public ResponseEntity<List<ResumeData>> getAllResumes() {
-        // Retrieve all resumes and return them
-        List<ResumeData> resumes = resumeRepository.findAll();
-        return ResponseEntity.ok(resumes);
-    }
+
 }

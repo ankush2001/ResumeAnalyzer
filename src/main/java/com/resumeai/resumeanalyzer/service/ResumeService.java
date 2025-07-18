@@ -6,7 +6,8 @@ import java.io.IOException;
 
 
 public interface ResumeService {
-    String parseAndSaveResume(MultipartFile file, String name, String email, String phone, String positionTitle) throws IOException;
+    String parseAndSaveResume(MultipartFile file, String name, String email, String phone, String positionTitle ,
+                              String jobDescription) throws IOException;
 }
 
 

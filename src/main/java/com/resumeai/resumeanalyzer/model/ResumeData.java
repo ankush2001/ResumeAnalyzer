@@ -22,4 +22,11 @@ public class ResumeData {
     @Column(length = 500)
     private String resumePath;
 
+    @Lob
+    @Column(length = 100000)
+    private String aiParsedData;
+    @Lob
+    private String jobDescription;
+    private Double atsScore; // ATS score calculated by the AI model
+
 }
