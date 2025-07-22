@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UploadResume from './pages/UploadResume';
 
-// It's good practice to make even simple pages their own component
 const HomePage = () => (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6">
         <h1 className="text-4xl font-bold mb-4">Welcome to Resume Analyzer</h1>
@@ -21,7 +20,6 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/upload-resume" element={<UploadResume />} />
-                {/* Use the new HomePage component for the root path */}
                 <Route path="/" element={<HomePage />} />
             </Routes>
         </Router>

@@ -1,0 +1,104 @@
+/*body{*/
+/*    margin: 0;*/
+/*    font-family: 'Segoe UI', Roboto, sans-serif;*/
+/*    background: linear-gradient(135deg, #667eea, #764ba2);*/
+/*    min-height: 100vh;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    padding: 40px;
+    gap: 40px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.form-container {
+    flex: 1;
+    max-width: 500px;
+    padding: 30px;
+    background: #cdcdcd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form input,
+.form textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+textarea {
+    max-height: 200px;
+}
+
+.upload-btn input {
+    display: block;
+    margin-top: 8px;
+    background: #dfdfdf;
+}
+
+button[type='submit'] {
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+}
+
+button[type='submit']:hover {
+    background: #0056b3;
+}
+
+.response-container {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.response-box {
+    margin-top: 10px;
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    font-family: monospace;
+}
+.ai-feedback {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+.ai-feedback h3 {
+    margin-top: 1rem;
+    color: #444;
+}
+
+.ai-feedback ul {
+    padding-left: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.ai-feedback li {
+    margin-bottom: 0.4rem;
+}
