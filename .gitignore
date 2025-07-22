@@ -34,5 +34,5 @@ build/
 
 
 frontend/.env
-*.env
+.env
 backend/.env
