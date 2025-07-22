@@ -32,6 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-backend/.env
+
 frontend/.env
 *.env
+backend/.env
