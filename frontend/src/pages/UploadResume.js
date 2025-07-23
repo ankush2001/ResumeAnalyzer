@@ -13,6 +13,7 @@ export default function UploadResume() {
 
     const [resume, setResume] = useState(null);
     const [aiResponse, setAiResponse] = useState(null);
+    const [loading, setLoading] = useState(false); // 🆕 loading state
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -29,7 +30,7 @@ export default function UploadResume() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         const formDataToSend = new FormData();
         formDataToSend.append('file', resume);
         formDataToSend.append('name', formData.name);
@@ -47,10 +48,17 @@ export default function UploadResume() {
         } catch (error) {
             console.error(error);
             setAiResponse({ error: '❌ Failed to get response from server.' });
+        }finally {
+            setLoading(false); // ✅ Done loading
         }
     };
 
     return (
+        <>
+        {/* 🟡 Warning Banner */}
+    <div className="banner-warning">
+        ⚠️ Some features are currently under testing or unavailable. Server may take time to respond if it's waking up.
+    </div>
         <div className="main-container">
             <div className="form-container">
                 <h1>Job Application</h1>
@@ -110,7 +118,9 @@ export default function UploadResume() {
             </div>
             <div className="response-container">
                 <h2>AI Resume Feedback</h2>
-                {aiResponse ? (
+                {loading ? (
+                    <p>⏳ Analyzing resume, please wait...</p>
+                ) :aiResponse ? (
                     aiResponse.error ? (
                         <p>{aiResponse.error}</p>
                     ) : (
@@ -125,5 +135,7 @@ export default function UploadResume() {
             </div>
 
         </div>
+        </>
     );
+
 }
