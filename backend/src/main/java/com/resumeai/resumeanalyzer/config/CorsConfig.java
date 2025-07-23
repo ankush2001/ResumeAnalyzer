@@ -13,19 +13,18 @@ public class CorsConfig {
 
     private final Logger logger = LoggerFactory.getLogger(CorsConfig.class);
 
-    // ✅ Inject the env variable correctly
-    @Value("${FRONTEND_ORIGIN}")
+    @Value("${FRONTEND_ORIGIN:https://resumeanalyzer-frontend-latest.onrender.com}")
     private String frontendUrl;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        logger.info("Configuring CORS for frontend URL: {}", frontendUrl);
-
+        logger.info("🔥 CORS Frontend Origin = {}", frontendUrl);
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins(frontendUrl)
+                registry.addMapping("/api/**")
+                        .allowedOrigins("https://resumeanalyzer-frontend-latest.onrender.com",
+                                "http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
