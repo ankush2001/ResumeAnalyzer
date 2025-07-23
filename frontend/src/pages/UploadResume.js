@@ -40,6 +40,7 @@ export default function UploadResume() {
         formDataToSend.append('jobDescription', formData.jobDescription);
 
         try {
+            // console.log('${process.env.REACT_APP_API_URL}');
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/resume/upload`, formDataToSend, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
