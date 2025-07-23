@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
 
-@CrossOrigin(origins = "${FRONTEND_ORIGIN}") // Allow requests from the frontend
+
 //@RestController is a convenience annotation that combines @Controller and @ResponseBody
 @RestController
 @RequestMapping("/api/resume")
