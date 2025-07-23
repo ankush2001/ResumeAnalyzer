@@ -146,4 +146,4 @@ npm run dev
 
 **Ankush Choudhary**  
 🚀 Passionate about AI, Java, and full-stack development  
-📬 Contact: [LinkedIn](https://linkedin.com/in/your-profile) | [GitHub](https://github.com/ankush2026)
+📬 Contact: [LinkedIn](https://www.linkedin.com/in/ankush-choudhary-a3ab4a190/) 
