@@ -1,8 +1,8 @@
-package main.java.com.resumeai.resumeanalyzer.service;
+package com.resumeai.resumeanalyzer.service;
 
 
-import main.java.com.resumeai.resumeanalyzer.model.ResumeData;
-import main.java.com.resumeai.resumeanalyzer.repository.ResumeRepository;
+import com.resumeai.resumeanalyzer.model.ResumeData;
+import com.resumeai.resumeanalyzer.repository.ResumeRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -114,51 +114,6 @@ public class ResumeServiceImpl implements ResumeService {
             }
         }
     }
-//    public Map<String, Object> extractFeedbackFromGPT(String gptContent) {
-//        Map<String, Object> feedback = new HashMap<>();
-//
-//        String summary = "";
-//        List<String> strengths = new ArrayList<>();
-//        List<String> improvements = new ArrayList<>();
-////        StringBuilder currentSection = new StringBuilder();
-//
-//        String[] lines = gptContent.split("\n");
-//        String section = "";
-//
-//        for (String line : lines) {
-//            line = line.trim();
-//
-//            if (line.equalsIgnoreCase("### Summary")) {
-//                section = "summary";
-//                continue;
-//            } else if (line.equalsIgnoreCase("### Strengths")) {
-//                section = "strengths";
-//                continue;
-//            } else if (line.equalsIgnoreCase("### Areas for Improvement")) {
-//                section = "improvements";
-//                continue;
-//            }
-//
-//            switch (section) {
-//                case "summary":
-//                    summary += line + " ";
-//                    break;
-//                case "strengths":
-//                    if (line.startsWith("-")) strengths.add(line.substring(1).trim());
-//                    break;
-//                case "improvements":
-//                    if (line.startsWith("-")) improvements.add(line.substring(1).trim());
-//                    break;
-//            }
-//        }
-//
-//        feedback.put("summary", summary.trim());
-//        feedback.put("strengths", strengths);
-//        feedback.put("improvements", improvements);
-//        feedback.put("detailedFeedback", gptContent); // Optional
-//
-//        return feedback;
-//    }
 public static Map<String, Object> extractFeedbackFromGPT(String gptContent) {
     Map<String, Object> result = new HashMap<>();
 
@@ -198,9 +153,5 @@ public static Map<String, Object> extractFeedbackFromGPT(String gptContent) {
         }
         return bullets;
     }
-
-
-
-
 
 }

@@ -1,8 +1,8 @@
-package main.java.com.resumeai.resumeanalyzer.controller;
+package com.resumeai.resumeanalyzer.controller;
 
-import main.java.com.resumeai.resumeanalyzer.model.ResumeData;
-import main.java.com.resumeai.resumeanalyzer.repository.ResumeRepository;
-import main.java.com.resumeai.resumeanalyzer.service.ResumeService;
+import com.resumeai.resumeanalyzer.model.ResumeData;
+import com.resumeai.resumeanalyzer.repository.ResumeRepository;
+import com.resumeai.resumeanalyzer.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;

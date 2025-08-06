@@ -1,4 +1,4 @@
-package main.java.com.resumeai.resumeanalyzer;
+package com.resumeai.resumeanalyzer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

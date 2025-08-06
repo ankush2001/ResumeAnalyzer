@@ -1,4 +1,4 @@
-package main.java.com.resumeai.resumeanalyzer.model;
+package com.resumeai.resumeanalyzer.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

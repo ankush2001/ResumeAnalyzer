@@ -1,4 +1,4 @@
-package main.java.com.resumeai.resumeanalyzer.config;
+package com.resumeai.resumeanalyzer.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package main.java.com.resumeai.resumeanalyzer.service;
+package com.resumeai.resumeanalyzer.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

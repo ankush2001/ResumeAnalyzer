@@ -1,6 +1,6 @@
-package main.java.com.resumeai.resumeanalyzer.repository;
+package com.resumeai.resumeanalyzer.repository;
 
-import main.java.com.resumeai.resumeanalyzer.model.ResumeData;
+import com.resumeai.resumeanalyzer.model.ResumeData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResumeRepository extends JpaRepository<ResumeData, Long> {

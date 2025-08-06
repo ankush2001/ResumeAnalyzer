@@ -1,4 +1,4 @@
-package main.java.com.resumeai.resumeanalyzer.service;
+package com.resumeai.resumeanalyzer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
