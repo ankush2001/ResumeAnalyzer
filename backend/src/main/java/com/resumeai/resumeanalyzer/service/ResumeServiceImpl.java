@@ -64,11 +64,11 @@ public class ResumeServiceImpl implements ResumeService {
         resumeData.setPositionTitle(positionTitle);
         resumeData.setResumePath(filePath);
         resumeData.setJobDescription(jobDescription);
-
-         resumeData.setAtsScore(atsResult.getScore());
+        resumeData.setAtsScore(atsResult.getScore());
         resumeRepository.save(resumeData);
 
         System.out.println("ATS Score: " + atsResult.getScore());
+
         JSONObject feedbackJson = new JSONObject(feedback); // full response
         String gptContent = feedbackJson.getJSONArray("choices")
                 .getJSONObject(0)

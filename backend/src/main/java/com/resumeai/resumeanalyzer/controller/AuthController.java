@@ -23,18 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth") //-> This annotation is used to map HTTP requests to specific handler
 public class AuthController {
 
-    @Autowired
+
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private JwtUtil jwtUtil;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder,JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) {

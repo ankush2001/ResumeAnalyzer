@@ -20,7 +20,12 @@ import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
 
-
+/**
+ * The ResumeController class handles REST requests related to resume processing and retrieval.
+ * It provides endpoints for uploading a resume and viewing a previously uploaded resume.
+ *
+ * @author [Your Name]
+ */
 //@RestController is a convenience annotation that combines @Controller and @ResponseBody
 @RestController
 @RequestMapping("/api/resume")
@@ -30,63 +35,62 @@ public class ResumeController {
     private final ResumeService resumeService; // Injecting the ResumeService dependency
     private final ResumeRepository resumeRepository;
 
-@PostMapping("/upload")
-public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file,
-                                     @RequestParam("name") String name,
-                                     @RequestParam("email") String email,
-                                     @RequestParam("phone") String phone,
-                                     @RequestParam("positionTitle") String positionTitle,
-                                     @RequestParam(value = "jobDescription", required = true) String jobDescription) {
-    try {
+    @PostMapping("/upload")
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("name") String name,
+                                    @RequestParam("email") String email,
+                                    @RequestParam("phone") String phone,
+                                    @RequestParam("positionTitle") String positionTitle,
+                                    @RequestParam(value = "jobDescription", required = true) String jobDescription) {
+        try {
 //        String response = resumeService.parseAndSaveResume(file, name, email, phone, positionTitle, jobDescription);
 
-        Map<String, Object> result = resumeService.parseAndSaveResume(file, name, email, phone, positionTitle, jobDescription);
-        return ResponseEntity.ok(result);
+            Map<String, Object> result = resumeService.parseAndSaveResume(file, name, email, phone, positionTitle, jobDescription);
+            return ResponseEntity.ok(result);
 //        return ResponseEntity.ok(response);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error processing the resume: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing the resume: " + e.getMessage());
+        }
     }
-}
 
 
     @GetMapping("/view-resume/{id}")
-public ResponseEntity<?> viewResume(@PathVariable Long id) throws Exception {
-    Optional<ResumeData> optionalResume = resumeRepository.findById(id);
+    public ResponseEntity<?> viewResume(@PathVariable Long id) throws Exception {
+        Optional<ResumeData> optionalResume = resumeRepository.findById(id);
 
-    if (optionalResume.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Resume with ID " + id + " not found");
+        if (optionalResume.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Resume with ID " + id + " not found");
+        }
+
+        ResumeData resume = resumeRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("Resume with id " + id + " not found"));
+
+
+        if (resume.getResumePath() == null || resume.getResumePath().isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Resume path not available for ID " + id);
+        }
+
+        File file = new File(resume.getResumePath());
+        if (!file.exists()) {
+            throw new FileNotFoundException("File not found: " + resume.getResumePath());
+        }
+
+
+        try {
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=" + file.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(file.length())
+                    .body(resource);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading file: " + e.getMessage());
+        }
     }
-
-    ResumeData resume = resumeRepository.findById(id)
-            .orElseThrow(() -> new FileNotFoundException("Resume with id " + id + " not found"));
-
-
-    if (resume.getResumePath() == null || resume.getResumePath().isBlank()) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Resume path not available for ID " + id);
-    }
-
-    File file = new File(resume.getResumePath());
-    if (!file.exists() ) {
-        throw new FileNotFoundException("File not found: " + resume.getResumePath());
-    }
-
-
-
-   try {
-       InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-
-       return ResponseEntity.ok()
-               .header(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=" + file.getName())
-               .contentType(MediaType.APPLICATION_PDF)
-               .contentLength(file.length())
-               .body(resource);
-   }catch (Exception e){
-         throw new RuntimeException("Error reading file: " + e.getMessage());
-   }
-}
 
 
 }
