@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind directives removed (Tailwind not configured in package.json).
+   Keep plain CSS below. */
 
 .App-header {
   background-color: #282c34;

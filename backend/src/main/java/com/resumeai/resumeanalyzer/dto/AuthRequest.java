@@ -6,7 +6,7 @@ import reactor.util.annotation.NonNull;
 @Data
 public class AuthRequest {
     @NonNull
-    private String email;
+    private String username;
     @NonNull
     private String password;
 

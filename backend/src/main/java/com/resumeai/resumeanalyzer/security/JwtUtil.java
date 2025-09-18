@@ -1,32 +1,40 @@
 package com.resumeai.resumeanalyzer.security;
 
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Base64;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import javax.crypto.SecretKey;
-import java.util.Base64;
-import java.util.Date;
 
 @Component
 public class JwtUtil {
 
     private final SecretKey key;
 
-    @Value("jwt.expirationMs")
-    private int expirationMs;
+@Value("${jwt.expirationMs}")
+private int expirationMs;
 
-    public  JwtUtil(@Value("${jwt.secret}") String secret) {
-        byte[] decodedKey = Base64.getDecoder().decode(secret);
-        this.key = Keys.hmacShaKeyFor(decodedKey);
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
+        byte[] keyBytes;
+        try {
+            keyBytes = Base64.getDecoder().decode(secret);
+        } catch (IllegalArgumentException ex) {
+            keyBytes = secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        }
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication;
+UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
         return io.jsonwebtoken.Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())

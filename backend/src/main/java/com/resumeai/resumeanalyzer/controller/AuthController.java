@@ -1,5 +1,22 @@
 package com.resumeai.resumeanalyzer.controller;
 
+/**
+ * Change History – ankush
+ * Date: 2025-09-11 (IST)
+ * Why: Added GET /api/auth/me endpoint to return current authenticated user info
+ */
+
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.resumeai.resumeanalyzer.dto.AuthRequest;
 import com.resumeai.resumeanalyzer.dto.AuthResponse;
@@ -8,16 +25,6 @@ import com.resumeai.resumeanalyzer.model.Role;
 import com.resumeai.resumeanalyzer.model.User;
 import com.resumeai.resumeanalyzer.repository.UserRepository;
 import com.resumeai.resumeanalyzer.security.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth") //-> This annotation is used to map HTTP requests to specific handler
@@ -58,10 +65,22 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest authRequest) {
        Authentication authentication = authenticationManager.authenticate(
-               new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
+               new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtUtil.generateToken(authentication); // Pass the authenticated object
         return new AuthResponse(token);
+    }
+
+    @GetMapping("/me")
+    public java.util.Map<String, Object> getCurrentUser(java.security.Principal principal) {
+        java.util.Map<String, Object> map = new java.util.HashMap<>();
+        userRepository.findByUsername(principal.getName()).ifPresent(u -> {
+            map.put("id", u.getId());
+            map.put("username", u.getUsername());
+            map.put("email", u.getEmail());
+            map.put("roles", u.getRole());
+        });
+        return map;
     }
 }

@@ -1,3 +1,8 @@
+/* Change History – ankush
+   Date: 2025-09-11 (IST)
+   Why: Added mobile breakpoint for responsive stacking and removed fixed 100vh on small screens
+*/
+
 /*body{*/
 /*    margin: 0;*/
 /*    font-family: 'Segoe UI', Roboto, sans-serif;*/
@@ -133,4 +138,19 @@ button[type='submit']:hover {
     border: 1px solid #ffeeba;
     border-radius: 5px;
     margin: 10px;
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .form-container,
+  .response-container {
+    max-width: none;
+    width: 100%;
+  }
 }
